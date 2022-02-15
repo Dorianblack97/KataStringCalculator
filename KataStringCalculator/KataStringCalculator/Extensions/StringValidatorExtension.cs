@@ -6,7 +6,7 @@ using System.Text;
 
 namespace KataStringCalculator
 {
-    public static class ValidatorExtension
+    public static class StringValidatorExtension
     {
         public static (string, string[]) ValidateString(this string numbers)
         {
@@ -18,7 +18,7 @@ namespace KataStringCalculator
             }
             return (tupla.Item1, tupla.Item2);
         }
-        public static string ValidateString2(this string numbers, out string[] separator)
+        public static string ValidateString(this string numbers, out string[] separator)
         {
             var tupla = numbers.CheckPersonalizedSeparator();
             foreach (var item in tupla.Item2)
@@ -29,10 +29,5 @@ namespace KataStringCalculator
             separator = tupla.Item2;
             return tupla.Item1;
         }
-        public static IEnumerable<int> CheckNegativeNumber(this IEnumerable<int> list)
-            =>
-            list.Any(x => x < 0) ?
-                throw new NegativeNumberException() :
-                list;
     }
 }

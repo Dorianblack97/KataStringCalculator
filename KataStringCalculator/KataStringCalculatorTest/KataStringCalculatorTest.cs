@@ -5,14 +5,16 @@ using System;
 
 namespace KataStringCalculatorTest
 {
-    public class Tests
+    public class CalculatorTests
     {
         private ICalculator _sut;
 
         [SetUp]
         public void Setup()
         {
-            _sut = new Calculator();
+            var validatorNotNegativeValidator = new NotNegativeValidator();
+            validatorNotNegativeValidator.SetNext(new NumberLimitValidator());
+            _sut = new Calculator(validatorNotNegativeValidator);
         }
 
         [TestCase("", ExpectedResult = 0)]
@@ -25,6 +27,7 @@ namespace KataStringCalculatorTest
         [TestCase("//;\n1;3", ExpectedResult = 4)]
         [TestCase("//|\n1|2|3", ExpectedResult = 6)]
         [TestCase("//sep\n2sep5", ExpectedResult = 7)]        
+        [TestCase("//sep\n2sep5000", ExpectedResult = 2)]        
               
         public int Test(string input) => _sut.Add(input);
 
